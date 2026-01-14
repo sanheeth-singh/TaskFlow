@@ -1,0 +1,23 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.env
+
+# Flask Instance Folder (Database lives here)
+instance/
+*.db
+*.sqlite3
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+
+# PyCharm / VS Code settings (optional but good practice)
+.idea/
+.vscode/
