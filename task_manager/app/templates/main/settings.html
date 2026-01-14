@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="settings-container">
+
+    <div class="settings-header">
+        <h1>Settings & Help</h1>
+        <p style="color: var(--text-secondary);">Manage your profile and learn how to get the most out of TaskFlow.</p>
+    </div>
+
+    <div class="settings-section">
+        <div class="section-title">
+            <i class="fa-solid fa-graduation-cap"></i> Quick Guide
+        </div>
+        <div class="guide-grid">
+            <div class="guide-step">
+                <span class="guide-icon"><i class="fa-solid fa-plus-circle"></i></span>
+                <strong>1. Create</strong>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Click "New Task" or use the input bar on the dashboard.</p>
+            </div>
+            <div class="guide-step">
+                <span class="guide-icon"><i class="fa-solid fa-layer-group"></i></span>
+                <strong>2. Organize</strong>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Set Priorities (High/Med/Low) to color-code your cards.</p>
+            </div>
+            <div class="guide-step">
+                <span class="guide-icon"><i class="fa-solid fa-check-circle"></i></span>
+                <strong>3. Complete</strong>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Done? Click the Trash icon to clear it from your view.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <div class="section-title">
+            <i class="fa-solid fa-lightbulb"></i> Why TaskFlow?
+        </div>
+        <div class="philosophy-content">
+            <p><strong>"Your mind is for having ideas, not holding them."</strong></p>
+            <p style="margin-top: 10px; font-size: 0.95rem;">
+                In a world of constant noise, TaskFlow gives you a silent space to dump your thoughts.
+                By externalizing your tasks, you reduce cognitive load, allowing you to focus deeply on the work that matters.
+                We keep it simple—no complex charts, just you and your progress.
+            </p>
+        </div>
+    </div>
+
+    <div class="settings-section">
+        <div class="section-title">
+            <i class="fa-solid fa-user-gear"></i> Personal Details
+        </div>
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <label style="font-weight: 500;">Your Name</label>
+            {{ form.username(class="settings-input", placeholder="Your Name") }}
+
+            <label style="font-weight: 500;">Email Address</label>
+            {{ form.email(class="settings-input", placeholder="name@example.com") }}
+
+            {{ form.submit(class="btn-primary", style="width: auto; padding: 10px 25px;",class="btn-new-task") }}
+        </form>
+    </div>
+
+<!--    Account deletion-->
+    <div class="settings-section danger-zone">
+        <div class="section-title danger-title">
+            <i class="fa-solid fa-triangle-exclamation"></i> Danger Zone
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">
+            Once you delete your account, there is no going back. All your tasks and history will be permanently removed.
+        </p>
+
+        <button type="button" onclick="openModal()" class="btn-delete">Delete My Account</button>
+    </div>
+
+</div> <div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3 style="margin-top: 0; color: #d63031;">Confirm Deletion</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">
+            Please enter your password to confirm. <br>This action <strong>cannot</strong> be undone.
+        </p>
+
+        <form action="{{ url_for('main.delete_account') }}" method="POST">
+            <input type="password" name="password" class="settings-input" placeholder="Enter your password" required>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn-delete">Permanently Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="settings-footer">
+        <p>
+            <span class="signature">BunnyMe9</span>
+        </p>
+        <small>&copy; 2026 TaskFlow. All rights reserved.</small>
+    </div>
+
+</div>
+
+<script>
+    // Functions to Open and Close the Modal
+    function openModal() {
+        document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    // Close modal if user clicks outside the box
+    window.onclick = function(event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

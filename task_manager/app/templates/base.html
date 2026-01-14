@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="sidebar">
+    <div class="brand">
+        <i class="fa-solid fa-layer-group" onclick="window.location.reload();" title="Refresh"></i>
+        <span>TaskFlow</span>
+    </div>
+
+    <a href="{{ url_for('main.home') }}" class="btn-new-task">
+        <i class="fa-solid fa-plus"></i>
+        <span>New Task</span>
+    </a>
+
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="{{ url_for('main.home')}}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url_for('main.calendar_view')}}" class="nav-link">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>My Calendar</span>
+            </a>
+        </li>
+<!--        <li class="nav-item">-->
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="fa-solid fa-clock-rotate-left"></i>-->
+<!--                <span>History</span>-->
+<!--            </a>-->
+<!--        </li>-->
+        <li class="nav-item">
+            <a href="{{url_for('main.settings')}}" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        {% if current_user.is_authenticated %}
+        <div class="user-card">
+            <div class="avatar" onclick="window.location.reload();">
+                {{ current_user.username[0] | upper }}
+            </div>
+            <div class="user-info">
+                <span class="user-name">{{ current_user.username }}</span>
+                <span class="user-role">Pro Member</span>
+            </div>
+            <a href="{{ url_for('auth.logout') }}" title="Logout" style="margin-left: auto; color: #ff7675;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
+        </div>
+        {% endif %}
+        <button class="theme-switch" onclick="toggleTheme()">
+            <i class="fa-solid fa-moon"></i>
+            <span>Dark Mode</span>
+        </button>
+        <p><strong>BunnyMe9</strong></p>
+    </div>
+</nav>
+
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div style="padding: 10px; background: var(--accent-color); color: white; border-radius: 8px; margin-bottom: 20px; position: relative;">
+                    {{ message }}
+
+                <button type="button"
+                        onclick="this.parentElement.style.display='none';"
+                        style="float: right; background: none; border: none; color: white; font-size: 20px; cursor: pointer; line-height: 1;">
+                    &times;
+                </button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Simple Dark Mode Logic
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        // Check local storage on load
+        if(localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</body>
+</html>
