@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="calendar-container">
+
+    <div class="calendar-wrapper">
+        <div class="cal-header">
+            <h2 class="month-label" id="monthYear">January 2026</h2>
+            <div>
+                <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="cal-nav-btn" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="days-grid">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+
+        <div class="dates-grid" id="calendarGrid">
+            </div>
+    </div>
+
+    <div class="agenda-panel">
+        <h3 id="selectedDateLabel" style="margin-top: 0;">Select a date</h3>
+        <div id="taskListContainer" style="margin-top: 20px;">
+            <p style="color: var(--text-secondary);">Click on a date to see your schedule.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentDate = new Date();
+    let allTasks = []; // We will store API data here
+
+    // 1. Fetch Data from API when page loads
+    async function fetchTasks() {
+        const response = await fetch('/api/tasks'); // Calls your Python route
+        allTasks = await response.json(); // Converts JSON to JS Array
+        renderCalendar();
+    }
+
+    // 2. Render the Calendar Grid
+    function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        // Update Header
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        document.getElementById('monthYear').innerText = `${monthNames[month]} ${year}`;
+
+        const grid = document.getElementById('calendarGrid');
+        grid.innerHTML = ""; // Clear previous
+
+        // Logic to find first day and total days
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Padding (Empty cells before the 1st)
+        for (let i = 0; i < firstDay; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.classList.add('date-cell', 'empty');
+            grid.appendChild(emptyCell);
+        }
+
+        // Days
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement('div');
+            cell.classList.add('date-cell');
+            cell.innerText = day;
+
+            // Check if any task matches this date
+            // Note: Months are 0-indexed in JS, so we add 1 for comparison string
+            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            // Check if ANY task exists for this date
+            const hasTask = allTasks.some(task => task.date === dateString);
+            if (hasTask) {
+                cell.classList.add('has-task');
+                const dot = document.createElement('div');
+                dot.classList.add('task-dot');
+                cell.appendChild(dot);
+            }
+
+            // Click Event
+            cell.onclick = () => selectDate(cell, dateString, day);
+            grid.appendChild(cell);
+        }
+    }
+
+    // 3. Handle Date Click
+    function selectDate(element, dateString, dayDisplay) {
+        // Remove active class from others
+        document.querySelectorAll('.date-cell').forEach(c => c.classList.remove('selected'));
+        element.classList.add('selected');
+
+        // Update Side Panel
+        document.getElementById('selectedDateLabel').innerText = `Tasks for ${dayDisplay} ${document.getElementById('monthYear').innerText}`;
+
+        const container = document.getElementById('taskListContainer');
+        container.innerHTML = ""; // Clear list
+
+        // Filter tasks for this specific date
+        const daysTasks = allTasks.filter(task => task.date === dateString);
+
+        if (daysTasks.length > 0) {
+            daysTasks.forEach(task => {
+                // Reuse your existing Card Design dynamically
+                const card = document.createElement('div');
+                card.className = `task-card priority-${task.priority}`;
+                card.style.marginBottom = "10px";
+                card.style.padding = "15px";
+                card.innerHTML = `
+                    <div style="font-weight:bold;">${task.title}</div>
+                    <div style="font-size:0.8rem; opacity:0.7;">${task.status} • ${task.priority}</div>
+                `;
+                container.appendChild(card);
+            });
+        } else {
+            container.innerHTML = `<p style="color: var(--text-secondary);">No tasks for this day. Clear skies! ☀️</p>`;
+        }
+    }
+
+    // 4. Navigation Buttons
+    function changeMonth(direction) {
+        currentDate.setMonth(currentDate.getMonth() + direction);
+        renderCalendar();
+    }
+
+    // Start everything
+    fetchTasks();
+</script>
+{% endblock %}
