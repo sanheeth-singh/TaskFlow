@@ -51,3 +51,16 @@ task_manager/
     │
     └── main/              # Core Application Blueprint
         └── routes.py      # Dashboard, API, Settings Logic
+```
+---
+🗺️ Roadmap
+We are constantly improving TaskFlow. Here is what is coming next:
+
+* **Email Verification:** Implement token-based email confirmation for authentic user accounts.
+
+* **Task Search & Filter:** Dynamic filtering by Priority and Category.
+
+* **Drag & Drop:** Interactive UI to reorder tasks or move them between statuses.
+
+* **Dark Mode:** User preference setting for UI themes.
+
