@@ -1,2 +1,53 @@
-# TaskFlow
-A robust task management application built with Flask and SQLite, featuring user authentication, profile management, and interactive to-do lists.
+# TaskFlow 🚀
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
+![Flask](https://img.shields.io/badge/Flask-2.x-lightgrey?style=for-the-badge&logo=flask)
+![SQLite](https://img.shields.io/badge/SQLite-Database-blue?style=for-the-badge&logo=sqlite)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?style=for-the-badge&logo=bootstrap)
+
+**TaskFlow** is a robust, industry-standard task management application built with Python and Flask. Unlike simple tutorial apps, TaskFlow is engineered with a **scalable Application Factory architecture**, separating concerns via **Blueprints** to ensure code maintainability and modularity.
+
+---
+
+## 📸 Interface Gallery
+
+| Dashboard View | Settings | Calendar |
+|:---:|:---:|:---:|
+| <img src="path/to/home-screenshot.png" width="400" alt="Home Dashboard"> | <img src="path/to/settings-screenshot.png" width="400" alt="Settings Page"> | <img src="path/to/calendar-screenshot.png" width="400" alt="Settings Page"> |
+
+
+---
+
+## ◻️ Key Features
+
+* **🔐 Secure Authentication:** User registration and login utilizing `Werkzeug` security hashing and `Flask-Login` for session management.
+* **📂 Modular Architecture:** Built using the **Application Factory Pattern** and **Blueprints**, preventing circular imports and allowing easy scalability.
+* **🗄️ Database Migrations:** Integrated `Flask-Migrate` (Alembic) to handle database schema changes without data loss.
+* **✅ Task Management:** Create, Read, Update, and Delete (CRUD) tasks with attributes like Priority (High/Medium/Low), Categories, and Due Dates.
+* **🔌 JSON API:** dedicated `/api/tasks` endpoint serving data for potential frontend frameworks or mobile apps.
+* **🛡️ Form Validation:** Robust input validation using `Flask-WTF` to prevent invalid data submission.
+
+---
+
+## 🛠️ Technical Structure
+
+The project follows a professional directory structure to separate business logic, database models, and routing:
+
+```text
+task_manager/
+│
+├── run.py                 # Application Entry Point
+├── migrations/            # Database Migrations folder
+├── instance/              # SQLite Database storage
+│
+└── app/                   # Main Application Package
+    ├── __init__.py        # App Factory & Extension Init
+    ├── extensions.py      # SQLAlchemy & LoginManager instances
+    ├── models.py          # Database Models (User, Tasks)
+    ├── forms.py           # WTForms Definitions
+    │
+    ├── auth/              # Authentication Blueprint
+    │   └── routes.py      # Login/Register Logic
+    │
+    └── main/              # Core Application Blueprint
+        └── routes.py      # Dashboard, API, Settings Logic
