@@ -13,7 +13,7 @@
 
 | Dashboard View | Settings | Calendar |
 |:---:|:---:|:---:|
-| <img src="path/to/home-screenshot.png" width="400" alt="Home Dashboard"> | <img src="path/to/settings-screenshot.png" width="400" alt="Settings Page"> | <img src="path/to/calendar-screenshot.png" width="400" alt="Settings Page"> |
+| <img src="project_visuals/home-screenshot.png" width="500" alt="Home Dashboard"> | <img src="project_visuals/settings-screenshot.png" width="500" alt="Settings Page"> | <img src="project_visuals/calendar-screenshot.png" width="500" alt="Settings Page"> |
 
 
 ---
