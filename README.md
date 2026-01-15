@@ -64,5 +64,5 @@ We are constantly improving TaskFlow. Here is what is coming next:
 
 * **Dark Mode:** User preference setting for UI themes.
 ---
-Author: <a href="https://github.com/sanheeth-singh"> <strong> Sanheeth singh </strong></a>
-Linkedin: <a href="www.linkedin.com/in/sanheethsingh">SanheethSingh</a>
+* Author: <a href="https://github.com/sanheeth-singh"> <strong> Sanheeth singh </strong></a>
+* Linkedin: <a href="www.linkedin.com/in/sanheethsingh">SanheethSingh</a>
