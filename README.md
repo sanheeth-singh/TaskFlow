@@ -63,4 +63,6 @@ We are constantly improving TaskFlow. Here is what is coming next:
 * **Drag & Drop:** Interactive UI to reorder tasks or move them between statuses.
 
 * **Dark Mode:** User preference setting for UI themes.
-
+---
+Author: <a href="https://github.com/sanheeth-singh"> <strong> Sanheeth singh </strong></a>
+Linkedin: <a href="">Sanheeth</a>
