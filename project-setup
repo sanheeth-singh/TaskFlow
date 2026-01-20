@@ -1,0 +1,28 @@
+1. Clone the Repository
+cmd:
+git clone [https://github.com/sanheeth-singh/taskflow.git](https://github.com/sanheeth-singh/taskflow.git)
+cd taskflow
+
+2. Create a Virtual Environment
+cmd:
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Mac/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install Dependencies
+cmd:
+pip install -r requirements.txt
+
+4. Initialize Database
+Since this project uses Flask-Migrate, run the upgrade command to generate the database schema:
+cmd:
+flask db upgrade
+
+4. Initialize Database
+Since this project uses Flask-Migrate, run the upgrade command to generate the database schema:
+cmd:
+flask db upgrade
