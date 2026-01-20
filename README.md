@@ -34,7 +34,7 @@
 The project follows a professional directory structure to separate business logic, database models, and routing:
 
 ```text
-task_manager/
+app_task_manager/
 │
 ├── run.py                 # Application Entry Point
 ├── migrations/            # Database Migrations folder
